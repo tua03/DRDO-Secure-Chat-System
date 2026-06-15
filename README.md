@@ -1,50 +1,70 @@
-# Secure Chat Application using AES and SHA-256
+# Secure Chat Application using RSA, AES and SHA-256
 
 ## Overview
 
-This project implements a secure client-server chat application using Python sockets. Two clients can communicate through a server while maintaining message confidentiality and integrity.
+This project implements a secure client-server chat application using Python socket programming. Two clients communicate through a central server while ensuring confidentiality and integrity of messages.
 
 ## Features
 
 * Multi-client communication using TCP sockets
-* AES Encryption for message confidentiality
-* SHA-256 Hashing for message integrity verification
-* Encrypted chat logging on the server
-* Multi-threaded client for simultaneous sending and receiving
+* RSA-based key exchange
+* AES encryption for secure message transmission
+* SHA-256 hashing for message integrity verification
+* Multi-threaded clients for simultaneous sending and receiving
+* Encrypted chat logging at the server
 
 ## Project Structure
 
-* `server.py` - Server implementation
-* `client.py` - Client implementation
-* `aes.py` - AES encryption and decryption
-* `sha.py` - SHA-256 hash generation
-* `rsa.py` - RSA demonstration
-* `dh.py` - Diffie-Hellman demonstration
-* `chat.log` - Encrypted message logs
+* `server.py` – Handles client connections and message forwarding
+* `client1.py` – First client implementation
+* `client2.py` – Second client implementation
+* `aes.py` – AES encryption and decryption functions
+* `rsa.py` – RSA key generation and key exchange functions
+* `sha.py` – SHA-256 hash generation
+* `chat.log` – Stores encrypted chat logs
 
 ## Working
 
-1. Sender enters a message.
-2. SHA-256 hash of the message is generated.
-3. Message and hash are combined and encrypted using AES.
-4. Server receives and forwards the encrypted message.
-5. Server stores encrypted logs.
-6. Receiver decrypts the message and verifies the SHA-256 hash.
-7. If hashes match, message integrity is verified.
+1. Client 1 generates an RSA public-private key pair.
+2. The public key is shared with Client 2 through the server.
+3. Client 2 generates an AES session key.
+4. The AES key is encrypted using Client 1's RSA public key and transmitted.
+5. Client 1 decrypts the AES key using its RSA private key.
+6. Both clients now share the same AES session key.
+7. Messages are hashed using SHA-256 and then encrypted using AES.
+8. The server forwards encrypted messages and stores encrypted logs.
+9. The receiving client decrypts the message and verifies its integrity using SHA-256.
 
-## Security Features
+## Security Mechanisms
 
-* **AES**: Provides confidentiality by encrypting messages.
-* **SHA-256**: Detects message modification during transmission.
-* **Encrypted Logs**: Server stores encrypted messages instead of plaintext.
+### RSA
 
-## Future Enhancements
+Used for secure exchange of the AES session key.
 
-* RSA-based key exchange
+### AES
+
+Used for encrypting chat messages to ensure confidentiality.
+
+### SHA-256
+
+Used to verify message integrity and detect tampering during transmission.
+
+## Current Status
+
+Implemented:
+
+* Client-server communication
+* RSA key exchange
+* AES encryption/decryption
+* SHA-256 integrity verification
+* Encrypted logging
+
+Future Enhancements:
+
+* File transfer support
 * Automatic client discovery
-* Digital signatures
-* Group chat support
+* Digital signatures for authentication
 
 ## Conclusion
 
-The project demonstrates secure communication using Python sockets, AES encryption, and SHA-256 hashing while ensuring confidentiality and integrity of transmitted messages.
+The project demonstrates secure communication using a hybrid cryptographic approach where RSA is used for key exchange, AES for message encryption, and SHA-256 for integrity verification.
