@@ -1,34 +1,50 @@
 # Secure Chat Application using AES and SHA-256
 
-## Project Overview
+## Overview
 
-This project implements a secure client-server chat application using Python sockets. Two clients can communicate through a server while maintaining confidentiality and integrity of messages.
+This project implements a secure client-server chat application using Python sockets. Two clients can communicate through a server while maintaining message confidentiality and integrity.
 
 ## Features
 
 * Multi-client communication using TCP sockets
 * AES Encryption for message confidentiality
 * SHA-256 Hashing for message integrity verification
+* Encrypted chat logging on the server
 * Multi-threaded client for simultaneous sending and receiving
-* Encrypted chat logging at the server side
 
 ## Project Structure
 
-server.py - Server implementation
-
-client.py - Client implementation
-
-aes.py - AES encryption and decryption functions
-
-sha.py - SHA-256 hash generation functions
-
-chat.log - Encrypted message logs
+* `server.py` - Server implementation
+* `client.py` - Client implementation
+* `aes.py` - AES encryption and decryption
+* `sha.py` - SHA-256 hash generation
+* `rsa.py` - RSA demonstration
+* `dh.py` - Diffie-Hellman demonstration
+* `chat.log` - Encrypted message logs
 
 ## Working
 
-1. The sender enters a message.
+1. Sender enters a message.
 2. SHA-256 hash of the message is generated.
-3. The message and hash are combined.
-4. The combined packet is encrypted using AES.
-5. The encrypted packet is sent to the server.
-6. The server stores encrypted logs
+3. Message and hash are combined and encrypted using AES.
+4. Server receives and forwards the encrypted message.
+5. Server stores encrypted logs.
+6. Receiver decrypts the message and verifies the SHA-256 hash.
+7. If hashes match, message integrity is verified.
+
+## Security Features
+
+* **AES**: Provides confidentiality by encrypting messages.
+* **SHA-256**: Detects message modification during transmission.
+* **Encrypted Logs**: Server stores encrypted messages instead of plaintext.
+
+## Future Enhancements
+
+* RSA-based key exchange
+* Automatic client discovery
+* Digital signatures
+* Group chat support
+
+## Conclusion
+
+The project demonstrates secure communication using Python sockets, AES encryption, and SHA-256 hashing while ensuring confidentiality and integrity of transmitted messages.
